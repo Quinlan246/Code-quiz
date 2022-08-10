@@ -1,6 +1,5 @@
-const quizDiv = document.getElementById("Start")
-const submitButton = document.getElementById("submit")
-const resultsDiv = document.getElementById("results")
+const quizDiv = document.getElementById("#Start")
+const counter = document.getElementById("#timer")
 const questions = [
     {
         question: "JavaScript is a ___ -side programming language.",
@@ -30,3 +29,7 @@ const questions = [
         correctAnswer: "c"
     }
 ];
+
+function renderQuestion() {
+
+}

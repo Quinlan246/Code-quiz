@@ -5,21 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Quiz</title>
+    <link href="Style.css" rel="stylesheet">
 </head>
+
 <body>
-    <style>
-        .Start{
-            text-align: center;
-        }
-    </style>
-    
-    <h1 id="Start">Start Quiz</h1> 
+    <div class="container">
+        <div id="questions-container" class="hide">
+            <div id="questions">Question</div>
+            <div id="anwser-buttons" class="btn-grid">
+                <button>Answer 1</button>
+                <button>Answer 2</button>
+                <button>Answer 3</button>
+                <button>Answer 4</button>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="start-btn">Start</button> 
+            <button id="next-btn" class="hide">Next</button>
+            <button id="submit-btn" class="hide">Submit Quiz</button>
+        </div>
+    </div>
 
-    <button id="submit">Submit Quiz</button>  
-
-    <h2 id="resuts"></h2>
-    
-    
-    <script src="script.js"></script>
+    <div id="timer"></div>
 </body>
+    <script src="script.js"></script>
 </html>
