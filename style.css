@@ -6,9 +6,10 @@
 
 body {
     display: flex;
+    height: 750px;
     justify-content: center;
     align-items: center;
-    background-color: blueviolet;
+    background-color: darkblue;
 }
 
 .container {
@@ -22,4 +23,26 @@ body {
     grid-template-columns: repeat(2, auto);
     gap: 10px;
     margin: 20px 0px;
+}
+
+.btn {
+    background-color: lightblue;
+    border: 4px solid black;
+    border-radius: 15px;
+    padding: 10px 15px;
+}
+
+.btn:hover {
+    background-color: lightslategray;
+    color: lightblue;
+}
+
+/* .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.hide {
+    display: none;
 }
