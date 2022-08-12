@@ -1,8 +1,10 @@
 const startButton = document.getElementById("start-btn")
 const counter = document.getElementById("#timer")
 const questionsContainer = document.getElementById("questions-container")
-const questions = document.getElementById("questions")
+const questionsEl = document.getElementById("questions")
 const answerButtons = document.getElementById("anwser-buttons")
+var score = 0
+var currentindex = 0
 const questionsArray = [
     {
         question: "JavaScript is a ___ -side programming language.",
@@ -36,35 +38,55 @@ function startGame() {
     startButton.classList.add("hide")
     questionsContainer.classList.remove('hide')
     
-    nextQuestion()
+    showQuestion(displayNextQuestion)
+    timer()
 }
-
-function nextQuestion() {
-    showQuestion()
-}
+console.log(questionsEl)
 
 function showQuestion(question) {
-    questions.innerText = question.question
-    console.log(showQuestion)
-    questions.answers.forEach(answer => {
-        const button = document.createElement('button')
-        button.innerText = answerButtons.text
-        button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-        }
-        button.addEventListener('click', selectAnswer)
+    questionsEl.innerText = question.question
+    question.choices.forEach(element => {
+        var button = document.createElement('button')
+        button.innerText=element
+        answerButtons.appendChild(button)
+        button.addEventListener('click', displayNextQuestion)
     })
+}  
+
+function displayNextQuestion(e) {
+    currentindex++
+    if (currentindex < questionsEl.length) {
+        selection(e.target.innerText == nextQuestions.answer)
+        answerButtons.innerHTML= ""
+        if (currentindex < questionsEl.length) {
+            nextQuestions = questionsEl[currentindex]
+            showQuestion(nextQuestions)
+        }   else {
+            currentindex = 0
+            showQuestion(nextQuestions)
+        }
+    } else {
+        endGame()
+    }
 }
 
-function selectAnswer(event) {
-
+function selection(response) {
+    if (response){
+        alert.innertext = "true"
+    } else {
+        alert.innerText = "false"
+        count = count - 15
+        timer.innerHTML = count
+    }
+    setTimeout(function(){
+        alert.innerText= ""
+    }, 1000);
 }
 
 function timer() {
-    var sec = 45;
+    var sec = 90;
     var timer = setInterval(function() {
-        document.getElementById('countdown').innerHTML = '00:' + sec;
+        document.getElementById('timer').innerHTML = '00:' + sec;
         sec--;
         if (sec < 0) {
             clearInterval(timer);
@@ -72,10 +94,35 @@ function timer() {
     }, 1000)
 }
 
-function saveHighScore(score, highScores) {
-    const newScore = {score, name};
-    highScores.push(newScore)
-    highScores.sort((a, b) => b.score - a.score);
-    highScores.splice(NO_OF_HIGH_SCORES);
-    localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
+// function checkHighScore(score) {
+//     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
+//     const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
+//     if (score > lowestScore) {
+//         saveHighScore(score, highScores);
+//         showHighScores();
+//     }
+// }
+
+// function showHighScores() {
+//     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
+//     const highScoreList = document.getElementById(HIGH_SCORES);
+//     highScoreList.innerHTML = highScores
+//     .map((score) => '<li>${score.score} - ${score.name}')
+//     .join('');
+// }
+
+// const NO_OF_HIGH_SCORES = 10;
+// const HIGH_SCORES ='highScores';
+
+// function saveHighScore(score, highScores) {
+//     const name = prompt('You got a highscore! Enter name:');
+//     const newScore = {score, name};
+//     highScores.push(newScore)
+//     highScores.sort((a, b) => b.score - a.score);
+//     highScores.splice(NO_OF_HIGH_SCORES);
+//     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
+// }
+
+function endGame(){
+    questionsContainer.classList.add("hide")
 }
