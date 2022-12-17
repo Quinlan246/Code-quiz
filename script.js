@@ -9,27 +9,26 @@ const questionsArray = [
     {
         question: "JavaScript is a ___ -side programming language.",
         answers: [
-            {text: "client", correct: false}, 
-            {text: "server", correct: false},
-            {text: "both", correct: true},
-            {text: "none", correct: false},
-        ],
+            "1. client", "2. server", "3. both", "4. none"],
+            correctAnswer: "3"
     }, {
         question: "Which are the correct “if” statements to execute certain code if “x” is equal to 2?",
-        answers: [
-            {text: "if(x2)", correct: false},
-            {text: "if(x = 2", correct: false},
-            {text: "if(x == 2)", correct: true},
-            {text: "if(x != 2)", correct: false},
-        ],
+        answers: [ "1. if(x2)", "2. if(x = 2)", "3. if(x == 2)", "4. if(x !=2"],
+        correctAnswer: "3"
     }, {
         question: "Who invented JavaScript?",
-        answers: [
-            {text: "Douglas Crockford", correct: false},
-            {text: "Sheryl Sandberg", correct: false},
-            {text: "Brendan Eich", correct: true},
-        ],
+        answers: [ "1. Douglas Crockford", "2. Sheryl Sandberg", "3. Brendan Eich"],
+        correctAnswer: "3"
+    }, {
+        question: "The condition in an if / else statement is enclosed within ____.",
+        answers: ["1. quotes", "2. curly brackets", "3. parentheses", "4. square brackets"],
+        correctAnswer: "1"
+    }, {
+        question: "String values must be enclosed within ____ when being assigned to variables.",
+        answers: ["1. commmas", "2. curly brackets", "3. quotes", "4. parentheses"],
+        correctAnswer: "2"
     }
+
 ];
 
 startButton.addEventListener("click", startGame)
@@ -43,45 +42,46 @@ function startGame() {
 }
 console.log(questionsEl)
 
-function showQuestion(question) {
-    questionsEl.innerText = question.question
-    question.choices.forEach(element => {
-        var button = document.createElement('button')
-        button.innerText=element
-        answerButtons.appendChild(button)
-        button.addEventListener('click', displayNextQuestion)
-    })
+function showQuestion(id) {
+    if (id  < questionsEl.length) {
+        questionEl.textContent = questionsArray[id].question;
+        answerButtons.textContent = questionsArray[id].answers[0];
+        answerButtons.textContent = questionsArray[id].answers[1];
+        answerButtons.textContent = questionsArray[id].answers[2];
+        answerButtons.textContent = questionsArray[id].answers[3];
+    }
 }  
 
-function displayNextQuestion(e) {
-    currentindex++
-    if (currentindex < questionsEl.length) {
-        selection(e.target.innerText == nextQuestions.answer)
-        answerButtons.innerHTML= ""
-        if (currentindex < questionsEl.length) {
-            nextQuestions = questionsEl[currentindex]
-            showQuestion(nextQuestions)
-        }   else {
-            currentindex = 0
-            showQuestion(nextQuestions)
-        }
+function checkAnswer(answer) {
+
+    var lineBreak = document.getElementById("lineBreak");
+    lineBreak.style.display = "block";
+    answerCheck.style.display = "block";
+
+    if (questions[questionIndex].answer === questions[questionIndex].choices[answer]) {
+        correctAns++;
+        answerCheck.textContent = "Correct!";
     } else {
-        endGame()
+        totalTime -= 10;
+        timeLeft.textContent = totalTime;
+        answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answer;
+    }
+
+    questionIndex++;
+    if (questionIndex < questions.length) {
+        nextQuestion();
+    } else {
+        gameOver();
     }
 }
 
-function selection(response) {
-    if (response){
-        alert.innertext = "true"
-    } else {
-        alert.innerText = "false"
-        count = count - 15
-        timer.innerHTML = count
-    }
-    setTimeout(function(){
-        alert.innerText= ""
-    }, 1000);
-}
+function chooseA() { checkAnswer(0); }
+
+function chooseB() { checkAnswer(1); }
+
+function chooseC() { checkAnswer(2); }
+
+function chooseD() { checkAnswer(3); }
 
 function timer() {
     var sec = 90;
@@ -94,35 +94,3 @@ function timer() {
     }, 1000)
 }
 
-// function checkHighScore(score) {
-//     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
-//     const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
-//     if (score > lowestScore) {
-//         saveHighScore(score, highScores);
-//         showHighScores();
-//     }
-// }
-
-// function showHighScores() {
-//     const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
-//     const highScoreList = document.getElementById(HIGH_SCORES);
-//     highScoreList.innerHTML = highScores
-//     .map((score) => '<li>${score.score} - ${score.name}')
-//     .join('');
-// }
-
-// const NO_OF_HIGH_SCORES = 10;
-// const HIGH_SCORES ='highScores';
-
-// function saveHighScore(score, highScores) {
-//     const name = prompt('You got a highscore! Enter name:');
-//     const newScore = {score, name};
-//     highScores.push(newScore)
-//     highScores.sort((a, b) => b.score - a.score);
-//     highScores.splice(NO_OF_HIGH_SCORES);
-//     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
-// }
-
-function endGame(){
-    questionsContainer.classList.add("hide")
-}
