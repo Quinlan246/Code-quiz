@@ -1,22 +1,23 @@
-const startButton = document.getElementById("start-btn")
-const counter = document.getElementById("#timer")
-const questionsContainer = document.getElementById("questions-container")
-const questionsEl = document.getElementById("questions")
-const answerButtons = document.getElementById("anwser-buttons")
+const startButton = document.getElementById("start-btn");
+const counter = document.getElementById("#timer");
+const questionsContainer = document.getElementById("questions-container");
+const questionsEl = document.getElementById("questions");
+const answerButtons = document.getElementById("anwser-buttons");
 const questionTitle = document.getElementById("questionTitle");
 const choiceA = document.getElementById("answer1");
 const choiceB = document.getElementById("answer2");
 const choiceC = document.getElementById("answer3");
 const choiceD = document.getElementById("answer4");
+const answerCheck = document.getElementById("answerCheck");
 
-var score = 0
-var currentindex = 0
+var correctAns = 0;
+var score = 0;
+var currentindex = 0;
 const questions = [
     {
         question: "JavaScript is a ___ -side programming language.",
-        answers: [
-            "1. client", "2. server", "3. both", "4. none"],
-            correctAnswer: "3"
+        answers: ["1. client", "2. server", "3. both", "4. none"],
+        correctAnswer: "3"
     }, {
         question: "Which are the correct “if” statements to execute certain code if “x” is equal to 2?",
         answers: [ "1. if(x2)", "2. if(x = 2)", "3. if(x == 2)", "4. if(x !=2"],
@@ -60,20 +61,22 @@ function nextQuestion() {
     choiceD.textContent = questions[questionIndex].answers[3];
 }
 
-function checkAnswer(answer) {
+function checkAnswer() {
 
-    if (questions[questionIndex].answers === questions[questionIndex].answers[answer]) {
+    answerCheck.classList.remove('hide');
+
+    if (questions[questionIndex].correctAnswer === questions[questionIndex].correctAnswer) {
         correctAns++;
         answerCheck.textContent = "Correct!";
     } else {
-        totalTime -= 10;
-        timeLeft.textContent = totalTime;
-        answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answers;
+        sec -= 10;
+        timeLeft.textContent = sec;
+        answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].correctAnswer;
     }
 
     questionIndex++;
     if (questionIndex < questions.length) {
-        showQuestion();
+        nextQuestion();
     } else {
         gameOver();
     }
@@ -87,8 +90,11 @@ function chooseC() { checkAnswer(2); }
 
 function chooseD() { checkAnswer(3); }
 
+var sec = 90;
+var timeLeft = document.getElementById("timer");
+
 function timer() {
-    var sec = 90;
+
     var timer = setInterval(function() {
         document.getElementById('timer').innerHTML = '00:' + sec;
         sec--;
@@ -100,5 +106,5 @@ function timer() {
 
 answer1.addEventListener("click", chooseA);
 answer2.addEventListener("click", chooseB);
-answer2.addEventListener("click", chooseC);
+answer3.addEventListener("click", chooseC);
 answer4.addEventListener("click", chooseD);
