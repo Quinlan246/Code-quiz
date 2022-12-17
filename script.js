@@ -3,9 +3,15 @@ const counter = document.getElementById("#timer")
 const questionsContainer = document.getElementById("questions-container")
 const questionsEl = document.getElementById("questions")
 const answerButtons = document.getElementById("anwser-buttons")
+const questionTitle = document.getElementById("questionTitle");
+const choiceA = document.getElementById("answer1");
+const choiceB = document.getElementById("answer2");
+const choiceC = document.getElementById("answer3");
+const choiceD = document.getElementById("answer4");
+
 var score = 0
 var currentindex = 0
-const questionsArray = [
+const questions = [
     {
         question: "JavaScript is a ___ -side programming language.",
         answers: [
@@ -34,42 +40,40 @@ const questionsArray = [
 startButton.addEventListener("click", startGame)
 
 function startGame() {
+    questionIndex = 0
     startButton.classList.add("hide")
     questionsContainer.classList.remove('hide')
     
-    showQuestion(displayNextQuestion)
+    showQuiz()
     timer()
 }
-console.log(questionsEl)
 
-function showQuestion(id) {
-    if (id  < questionsEl.length) {
-        questionEl.textContent = questionsArray[id].question;
-        answerButtons.textContent = questionsArray[id].answers[0];
-        answerButtons.textContent = questionsArray[id].answers[1];
-        answerButtons.textContent = questionsArray[id].answers[2];
-        answerButtons.textContent = questionsArray[id].answers[3];
-    }
-}  
+function showQuiz() {
+    nextQuestion();
+}
+
+function nextQuestion() {
+    questionTitle.textContent = questions[questionIndex].question;
+    choiceA.textContent = questions[questionIndex].answers[0];
+    choiceB.textContent = questions[questionIndex].answers[1];
+    choiceC.textContent = questions[questionIndex].answers[2];
+    choiceD.textContent = questions[questionIndex].answers[3];
+}
 
 function checkAnswer(answer) {
 
-    var lineBreak = document.getElementById("lineBreak");
-    lineBreak.style.display = "block";
-    answerCheck.style.display = "block";
-
-    if (questions[questionIndex].answer === questions[questionIndex].choices[answer]) {
+    if (questions[questionIndex].answers === questions[questionIndex].answers[answer]) {
         correctAns++;
         answerCheck.textContent = "Correct!";
     } else {
         totalTime -= 10;
         timeLeft.textContent = totalTime;
-        answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answer;
+        answerCheck.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answers;
     }
 
     questionIndex++;
     if (questionIndex < questions.length) {
-        nextQuestion();
+        showQuestion();
     } else {
         gameOver();
     }
@@ -94,3 +98,7 @@ function timer() {
     }, 1000)
 }
 
+answer1.addEventListener("click", chooseA);
+answer2.addEventListener("click", chooseB);
+answer2.addEventListener("click", chooseC);
+answer4.addEventListener("click", chooseD);
