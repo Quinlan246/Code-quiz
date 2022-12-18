@@ -61,11 +61,11 @@ function nextQuestion() {
     choiceD.textContent = questions[questionIndex].answers[3];
 }
 
-function checkAnswer() {
+function checkAnswer(correctAnswer) {
 
     answerCheck.classList.remove('hide');
 
-    if (questions[questionIndex].correctAnswer === questions[questionIndex].correctAnswer) {
+    if (questions[questionIndex].correctAnswer === questions[questionIndex].answers[correctAnswer]) {
         correctAns++;
         answerCheck.textContent = "Correct!";
     } else {
