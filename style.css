@@ -20,7 +20,7 @@ body {
     background-color: #4e5a66;
 }
 
-.container {
+#container {
     background-color: grey ;
     display: flex;
     justify-content: center;

@@ -1,5 +1,5 @@
 const startButton = document.getElementById("start-btn");
-const counter = document.getElementById("#timer");
+const counter = document.getElementById("timer");
 const questionsContainer = document.getElementById("questions-container");
 const questionsEl = document.getElementById("questions");
 const answerButtons = document.getElementById("anwser-buttons");
@@ -9,6 +9,8 @@ const choiceB = document.getElementById("answer2");
 const choiceC = document.getElementById("answer3");
 const choiceD = document.getElementById("answer4");
 const answerCheck = document.getElementById("answerCheck");
+const controls = document.getElementById("controls");
+const container = document.getElementById("container")
 
 var correctAns = 0;
 var score = 0;
@@ -17,23 +19,23 @@ const questions = [
     {
         question: "JavaScript is a ___ -side programming language.",
         answers: ["1. client", "2. server", "3. both", "4. none"],
-        correctAnswer: "3"
+        correctAnswer: "3. both"
     }, {
         question: "Which are the correct “if” statements to execute certain code if “x” is equal to 2?",
         answers: [ "1. if(x2)", "2. if(x = 2)", "3. if(x == 2)", "4. if(x !=2"],
-        correctAnswer: "3"
+        correctAnswer: "3. if(x == 2)"
     }, {
         question: "Who invented JavaScript?",
         answers: [ "1. Douglas Crockford", "2. Sheryl Sandberg", "3. Brendan Eich"],
-        correctAnswer: "3"
+        correctAnswer: "3. Brendan Eich"
     }, {
         question: "The condition in an if / else statement is enclosed within ____.",
         answers: ["1. quotes", "2. curly brackets", "3. parentheses", "4. square brackets"],
-        correctAnswer: "1"
+        correctAnswer: "1. quotes"
     }, {
         question: "String values must be enclosed within ____ when being assigned to variables.",
         answers: ["1. commmas", "2. curly brackets", "3. quotes", "4. parentheses"],
-        correctAnswer: "2"
+        correctAnswer: "2. curly brackets"
     }
 
 ];
@@ -82,13 +84,22 @@ function checkAnswer(correctAnswer) {
     }
 }
 
-function chooseA() { checkAnswer(0); }
+function chooseA() { checkAnswer(0) }
 
-function chooseB() { checkAnswer(1); }
+function chooseB() { checkAnswer(1) }
 
-function chooseC() { checkAnswer(2); }
+function chooseC() { checkAnswer(2) }
 
-function chooseD() { checkAnswer(3); }
+function chooseD() { checkAnswer(3) }
+
+function gameOver() {
+    questionsContainer.style.display = "none";
+    counter.style.display = "none";
+    controls.style.display = "none";
+    container.style.display = "none";
+
+    finalScore.textContent = correctAns;
+}
 
 var sec = 90;
 var timeLeft = document.getElementById("timer");
