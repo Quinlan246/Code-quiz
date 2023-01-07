@@ -11,6 +11,16 @@ const choiceD = document.getElementById("answer4");
 const answerCheck = document.getElementById("answerCheck");
 const controls = document.getElementById("controls");
 const container = document.getElementById("container")
+const initialInput = document.getElementById("initialInput");
+const highScoreSection = document.getElementById("highScoreSection");
+const finalScore = document.getElementById("finalScore");
+const clearHighScoreBtn = document.getElementById("clearHighScoreBtn"); 
+const viewHighScore = document.getElementById("viewHighScore");
+const listOfHighScores = document.getElementById("listOfHighScores");
+const submitInitialBtn = document.getElementById("submitInitialBtn");
+const goBackBtn = document.getElementById("goBackBtn");
+const scoreContainer = document.getElementById("scoreContainer")
+const summary = document.getElementById("summary");
 
 var correctAns = 0;
 var score = 0;
@@ -40,12 +50,13 @@ const questions = [
 
 ];
 
-startButton.addEventListener("click", startGame)
 
 function startGame() {
+    
     questionIndex = 0
-    startButton.classList.add("hide")
-    questionsContainer.classList.remove('hide')
+    initialInput.textContent = ""
+    startButton.style.display = "none"
+    questionsContainer.style.display = "block"
     
     showQuiz()
     timer()
@@ -65,7 +76,7 @@ function nextQuestion() {
 
 function checkAnswer(correctAnswer) {
 
-    answerCheck.classList.remove('hide');
+    answerCheck.style.display = "block"
 
     if (questions[questionIndex].correctAnswer === questions[questionIndex].answers[correctAnswer]) {
         correctAns++;
@@ -93,6 +104,7 @@ function chooseC() { checkAnswer(2) }
 function chooseD() { checkAnswer(3) }
 
 function gameOver() {
+    summary.style.display = "block"
     questionsContainer.style.display = "none";
     counter.style.display = "none";
     controls.style.display = "none";
@@ -115,6 +127,83 @@ function timer() {
     }, 1000)
 }
 
+function storeHighScores(event) {
+    event.preventDefault();
+
+    if (initialInput.value === "") {
+        alert("Please enter your initials!");
+        return;
+    } 
+
+    counter.style.display = "none"
+    highScoreSection.style.display = "block"
+
+    var savedHighScores = localStorage.getItem("high scores");
+    var scoresArray;
+
+    if (savedHighScores === null) {
+        scoresArray = [];
+    } else {
+        scoresArray = JSON.parse(savedHighScores)
+    }
+
+    var userScore = {
+        initials: initialInput.value,
+        score: finalScore.textContent
+    };
+
+    console.log(userScore);
+    scoresArray.push(userScore);
+
+    var scoresArrayString = JSON.stringify(scoresArray);
+    window.localStorage.setItem("high scores", scoresArrayString);
+
+    showHighScores();
+}
+
+var i = 0;
+function showHighScores() {
+
+    counter.style.display = "none"
+    questionsContainer.style.display = "none"
+    highScoreSection.style.display = "block"
+
+
+    var savedHighScores = localStorage.getItem("high scores");
+
+    if (savedHighScores === null) {
+        return;
+    }
+    console.log(savedHighScores);
+
+    var storedHighScores = JSON.parse(savedHighScores);
+
+    for (; i < storedHighScores.length; i++) {
+        var eachNewHighScore = document.createElement("p");
+        eachNewHighScore.innerHTML = storedHighScores[i].initials + ": " + storedHighScores[i].score;
+        listOfHighScores.appendChild(eachNewHighScore);
+    }
+}
+
+submitInitialBtn.addEventListener("click", function(event){ 
+    storeHighScores(event);
+});
+
+viewHighScore.addEventListener("click", function(event) { 
+    showHighScores(event);
+});
+
+goBackBtn.addEventListener("click", function() {
+    highScoreSection.style.display = "none"
+    summary.style.display = "none"
+});
+
+clearHighScoreBtn.addEventListener("click", function(){
+    window.localStorage.removeItem("high scores");
+    listOfHighScores.innerHTML = "High Scores Cleared!";
+});
+
+startButton.addEventListener("click", startGame)
 answer1.addEventListener("click", chooseA);
 answer2.addEventListener("click", chooseB);
 answer3.addEventListener("click", chooseC);

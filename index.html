@@ -9,11 +9,15 @@
 </head>
 
 <body>
+    <div>
+        <a href="#" id="viewHighScore">View High Scores</a>
+    </div>
+    <div id="timer"></div>
    <h1>Welcome to my online coding quiz!
     See how you stack up against others.
    </h1>
     <h2 id="container">
-        <div id="questions-container" class="hide">
+        <div id="questions-container" style="display: none;">
             <div id="questionTitle">Question</div>
             <div id="anwser-buttons" class="btn-grid">
                 <button class="btn" id="answer1">Answer 1</button>
@@ -22,14 +26,34 @@
                 <button class="btn" id="answer4">Answer 4</button>
                 <h1 id="alert"></h1>
             </div>
-            <p id="answerCheck" class="hide"></p>
+            <p id="answerCheck" style="display: none;"></p>
         </div>
         <div id="controls">
             <button id="start-btn" class="btn">Start</button> 
         </div>
     </h2>
 
-    <div id="timer"></div>
+        <div style="display: none;" id="summary">
+            <h2>Your final score is <span id="finalScore"></span> !</h2>
+            <form>
+                <p>Enter your initials: <input id="initialInput" class="form-control" type="text">
+                <button type="submit" id="submitInitialBtn" class="btn">Submit</button>
+                </p>
+            </form>
+        </div>
+
+        <div id="highScoreSection" style="display: none;">
+            <h2>High Scores</h2>                   
+            
+            <div id="listOfHighScores" class="list-group"></div>
+
+            <p>
+                <button type="submit" class="btn" id="goBackBtn">Go Back</button>
+                <button type="submit" class="btn" id="clearHighScoreBtn">Clear High Scores</button>
+            </p>
+            
+        </div>
+
 </body>
     <script src="script.js"></script>
 </html>
